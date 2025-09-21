@@ -3,11 +3,13 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
+from fastapi_mail import  FastMail, MessageSchema
 
 
 from .database import get_db
 from .models import User
 from .schemas import UserCreate
+from .config import mail_config
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated = "auto")
 
@@ -31,4 +33,14 @@ async def register_api(user : UserCreate, db: Annotated[Session, Depends(get_db)
     )
     print(new_user)
 
-    return {"message" : "succes"}
+    message = MessageSchema(
+        subject="abdurauf nasrullayev xabar jonatyapti",
+        recipients=[user.email],
+        body= f"tasdiqlash kodi :{verification_code}",
+        subtype= "plain"
+        )
+
+    fm = FastMail(mail_config)
+    await fm.send_message(message)
+    return {"message": "succes"}
+    

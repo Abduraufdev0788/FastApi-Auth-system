@@ -19,4 +19,7 @@ LocalSession = sessionmaker(engine)
 
 def get_db():
     db = LocalSession()
-    return db
+    try:
+        yield db
+    finally:
+        db.close()

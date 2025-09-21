@@ -19,7 +19,7 @@ class User(Base):
     hashed_password = Column(String(512), nullable=False)
     is_active = Column(Boolean, default=False)
     is_verified = Column(Boolean, default=False)
-    verfication_code = Column(Integer)
+    verification_code = Column(Integer)
 
     tasks = relationship("Task", back_populates="user")
 

@@ -1,8 +1,9 @@
 from pydantic  import BaseModel, Field, EmailStr
+from typing import Annotated
 
 class UserCreate(BaseModel):
-    first_name:str    = Field(min_length=3, max_length=64)
-    last_name:str     = Field(min_length=3, max_length=64)
-    email :str        = EmailStr()
-    password:str      = Field(min_length=8)
+    first_name: Annotated[str,  Field(min_length=3, max_length=64)]
+    last_name:  Annotated[str | None,  Field(min_length=3, max_length=64)] = None
+    email :     Annotated[str, EmailStr()]
+    password:   Annotated[str, Field(min_length=8)]
 

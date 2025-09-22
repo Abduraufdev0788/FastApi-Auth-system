@@ -21,7 +21,7 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     verification_code = Column(Integer)
 
-    tasks = relationship("Task", back_populates="user")
+    tasks = relationship("task", back_populates="user")
 
     @property
     def full_name(self) -> str:
@@ -34,7 +34,7 @@ class User(Base):
         return f"{self.user_id}: {self.email} -- {self.full_name}"
         
 class Task(Base):
-    __tablename__ = "Tasks"
+    __tablename__ = "tasks"
     task_id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     description = Column(Text)
